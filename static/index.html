@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gramin-Nyaya | Justice at Every Doorstep</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+    
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <i class="ph-fill ph-scales logo-icon"></i>
+            <div class="logo-text">
+                <span class="nav-title">Gramin-Nyaya</span>
+                <span class="nav-subtitle">AI POWERED LEGAL AID</span>
+            </div>
+        </div>
+        <div class="nav-center">
+            <a href="#" class="active">Home</a>
+            <a href="#">Legal Services</a>
+            <a href="#">Knowledge Base</a>
+            <a href="#">Help</a>
+        </div>
+        <div class="nav-right">
+            <div class="lang-toggle"><i class="ph ph-globe"></i> Hindi/English</div>
+            <button class="login-btn">LOGIN</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-left">
+                <span class="hero-badge">YOUR PERSONAL LEGAL ASSISTANT</span>
+                <h1>न्याय सबके द्वार<br>Justice at Every Doorstep</h1>
+                <p>Empowering rural India through seamless access to legal aid, grievance redressal, and information on government welfare schemes. Bridging the gap between the citizen and the judiciary.</p>
+                <div class="hero-buttons">
+                    <button class="primary-btn">START LEGAL QUERY <i class="ph-bold ph-arrow-right"></i></button>
+                    <button class="secondary-btn">VIEW SCHEMES</button>
+                </div>
+            </div>
+            
+            <div class="hero-right">
+                <!-- Embedded AI Chat Assistant -->
+                <div class="app-container">
+                    <header class="chat-header">
+                        <div class="mode-toggle">
+                            <span class="status-indicator"></span>
+                            <span class="status-text">AI Legal Assistant Active</span>
+                        </div>
+                    </header>
+                    <main class="chat-container">
+                        <div id="chat-messages" class="chat-messages">
+                            <div class="message system-message">
+                                <div class="message-icon"><i class="ph-fill ph-scales"></i></div>
+                                <div class="message-content">
+                                    <p><strong>ग्रामिन न्याय में आपका स्वागत है।</strong></p>
+                                    <p>मैं आपका एआई कानूनी सहायक हूँ। कृपया अपना कानूनी प्रश्न नीचे दर्ज करें या बोलकर पूछें।</p>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+                    <footer class="input-area">
+                        <div class="input-container">
+                            <button id="mic-btn" class="icon-btn mic-btn" aria-label="Record voice">
+                                <i class="ph-fill ph-microphone"></i>
+                            </button>
+                            <div class="input-wrapper">
+                                <textarea id="user-input" placeholder="अपना प्रश्न यहाँ दर्ज करें... (Type query here...)" rows="1"></textarea>
+                            </div>
+                            <button id="send-btn" class="icon-btn send-btn" aria-label="Send message">
+                                <i class="ph-bold ph-paper-plane-right"></i>
+                            </button>
+                        </div>
+                        <div id="recording-indicator" class="recording-indicator hidden">
+                            <div class="pulsing-dot"></div>
+                            <span>Recording...</span>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Grid -->
+    <section class="services-section">
+        <h2 class="section-title">Institutional Legal Services</h2>
+        <p class="section-subtitle">Access specialized legal support across essential domains. Designed for the specific socio-legal context of rural communities.</p>
+        
+        <div class="services-grid">
+            <div class="service-card">
+                <i class="ph-fill ph-mountains card-icon"></i>
+                <h3>Property</h3>
+                <p>Land dispute resolution, inheritance records, and verification of agricultural titles.</p>
+                <ul class="card-list">
+                    <li><i class="ph-bold ph-check-circle"></i> Mutation Records</li>
+                    <li><i class="ph-bold ph-check-circle"></i> Boundary Disputes</li>
+                </ul>
+            </div>
+            <div class="service-card">
+                <i class="ph-fill ph-users card-icon"></i>
+                <h3>Family</h3>
+                <p>Mediation for domestic matters, matrimonial aid, and senior citizen protection rights.</p>
+                <ul class="card-list">
+                    <li><i class="ph-bold ph-check-circle"></i> Mediation</li>
+                    <li><i class="ph-bold ph-check-circle"></i> Welfare Rights</li>
+                </ul>
+            </div>
+            <div class="service-card">
+                <i class="ph-fill ph-wrench card-icon"></i>
+                <h3>Labor</h3>
+                <p>Assistance with wage claims, MGNREGA disputes, and seasonal worker protection.</p>
+                <ul class="card-list">
+                    <li><i class="ph-bold ph-check-circle"></i> Wage Disputes</li>
+                    <li><i class="ph-bold ph-check-circle"></i> Safe Migration</li>
+                </ul>
+            </div>
+            <div class="service-card">
+                <i class="ph-fill ph-gavel card-icon"></i>
+                <h3>Govt Schemes</h3>
+                <p>Clarifying legal eligibility for central and state welfare benefits and direct transfers.</p>
+                <ul class="card-list">
+                    <li><i class="ph-bold ph-check-circle"></i> DBT Issues</li>
+                    <li><i class="ph-bold ph-check-circle"></i> Eligibility Check</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Banner -->
+    <section class="stats-banner">
+        <div class="stat-item">
+            <h2>24/7</h2>
+            <p>ALWAYS AVAILABLE</p>
+        </div>
+        <div class="stat-item">
+            <h2>100%</h2>
+            <p>FREE LEGAL AID</p>
+        </div>
+        <div class="stat-item">
+            <h2>AI</h2>
+            <p>POWERED ANALYSIS</p>
+        </div>
+        <div class="stat-item">
+            <h2>A+</h2>
+            <p>ACCURACY</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <div class="footer-logo">
+                    <i class="ph-fill ph-scales"></i>
+                    <strong>Gramin-Nyaya Portal</strong>
+                </div>
+                <p>An advanced AI platform designed to promote legal awareness and democratize access to justice in rural India.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Feedback</a>
+                <a href="#">Sitemap</a>
+            </div>
+            <div class="footer-col">
+                <h4>External Portals</h4>
+                <a href="#">Department of Justice</a>
+                <a href="#">National Portal of India</a>
+                <a href="#">Digital India</a>
+                <a href="#">PMO India</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contact Support</h4>
+                <p>Toll Free Helpline: 1800-11-XXXX</p>
+                <p>Email: legal123@xxxxx.com</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
