@@ -10,6 +10,15 @@ from stt_service import transcribe_audio_file
 
 app = FastAPI()
 
+# Ensure vector DB exists on startup
+if not os.path.exists("./chroma_db"):
+    print("[Startup] Vector database not found. Ingesting documents...")
+    try:
+        from ingest_docs import ingest_data
+        ingest_data()
+    except Exception as e:
+        print(f"[Startup Warning] Could not ingest documents: {e}")
+
 # Mount the static directory
 os.makedirs("static", exist_ok=True)
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -18,12 +27,12 @@ class QueryRequest(BaseModel):
     query: str
 
 @app.get("/", response_class=HTMLResponse)
-async def read_root():
+def read_root():
     with open("static/index.html", "r", encoding="utf-8") as f:
         return f.read()
 
 @app.post("/api/ask")
-async def ask_question(req: QueryRequest):
+def ask_question(req: QueryRequest):
     try:
         answer = ask_gramin_nyaya(req.query)
         return {"answer": answer}
@@ -31,7 +40,7 @@ async def ask_question(req: QueryRequest):
         return JSONResponse(status_code=500, content={"error": str(e)})
 
 @app.post("/api/transcribe")
-async def transcribe_audio(file: UploadFile = File(...)):
+def transcribe_audio(file: UploadFile = File(...)):
     try:
         temp_file_path = f"temp_{file.filename}"
         with open(temp_file_path, "wb") as buffer:

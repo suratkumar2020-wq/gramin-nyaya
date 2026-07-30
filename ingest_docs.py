@@ -55,8 +55,8 @@ def ingest_data():
     # 3. Split the Text into Chunks
     print("Splitting text into chunks...")
     text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=800,       # Smaller chunks are better for the 1B Jetson model
-        chunk_overlap=150,    # Overlap ensures sentences aren't cut off awkwardly
+        chunk_size=500,       # Reduced from 800 — tighter chunks = smaller prompt size
+        chunk_overlap=80,     # Reduced overlap keeps total DB size smaller on disk
         separators=["\n\n", "\n", ".", " ", ""]
     )
     chunks = text_splitter.split_documents(documents)
@@ -64,7 +64,11 @@ def ingest_data():
 
     # 4. Initialize Embeddings (Matching your rag_logic.py exactly)
     print("Initializing embedding model...")
-    embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2")
+    embeddings = HuggingFaceEmbeddings(
+        model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+        model_kwargs={"device": "cpu"},
+        encode_kwargs={"normalize_embeddings": True},  # Must match rag_logic.py for consistent similarity scores
+    )
 
     # 5. Create and Save the Vector Database
     print("Building Chroma vector database. This may take a moment...")

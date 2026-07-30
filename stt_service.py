@@ -1,14 +1,21 @@
-import pyaudio
+try:
+    import pyaudio
+except ImportError:
+    pyaudio = None
 import wave
 import math
 import struct
 import os
 from faster_whisper import WhisperModel
 
-# 'base' is used for speed; change to 'small' if you need higher accuracy
-model_size = "base" 
-print("Loading Voice Model (Whisper)...")
-stt_model = WhisperModel(model_size, device="cpu", compute_type="int8") 
+_stt_model = None
+
+def get_stt_model():
+    global _stt_model
+    if _stt_model is None:
+        print("Loading Voice Model (Whisper)...")
+        _stt_model = WhisperModel("base", device="cpu", compute_type="int8")
+    return _stt_model 
 
 def get_rms(data):
     count = len(data) // 2
@@ -20,6 +27,11 @@ def get_rms(data):
     return math.sqrt(sum_squares / count)
 
 def record_and_transcribe():
+    if pyaudio is None:
+        print("\n[त्रुटि] PyAudio is not installed. Terminal voice recording is unavailable.")
+        print("Please type your question instead or use the Web UI.")
+        return ""
+
     CHUNK, FORMAT, CHANNELS, RATE = 1024, pyaudio.paInt16, 1, 16000
     WAVE_OUTPUT_FILENAME = "user_voice.wav"
     SILENCE_THRESHOLD = 150  # Lowered from 300 to better capture soft voices
@@ -79,7 +91,7 @@ def record_and_transcribe():
         print("⏳ आवाज़ को समझा जा रहा है (Transcribing)...")
         # Transcribe with VAD filtering and anti-hallucination settings. 
         # (initial_prompt was removed because Whisper was echoing it instead of transcribing voice).
-        segments, _ = stt_model.transcribe(
+        segments, _ = get_stt_model().transcribe(
             WAVE_OUTPUT_FILENAME, 
             language="hi", 
             beam_size=5,
@@ -102,7 +114,7 @@ def record_and_transcribe():
 def transcribe_audio_file(file_path):
     try:
         print(f"⏳ आवाज़ को समझा जा रहा है (Transcribing file: {file_path})...")
-        segments, _ = stt_model.transcribe(
+        segments, _ = get_stt_model().transcribe(
             file_path, 
             language="hi", 
             beam_size=5,

@@ -1,11 +1,30 @@
+import sys
+import os
+
+# Ensure UTF-8 output on Windows terminal for Devanagari (Hindi) text
+if sys.platform == "win32":
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+        sys.stdin.reconfigure(encoding='utf-8')
+    except Exception:
+        pass
+
 from stt_service import record_and_transcribe
 from rag_logic import ask_gramin_nyaya
-import sys
 
 def start_system():
     print("\n" + "="*45)
     print("GRAMIN-NYAYA: AI LEGAL ASSISTANT (OFFLINE)")
     print("="*45)
+
+    # Check if vector DB exists, auto ingest if missing
+    if not os.path.exists("./chroma_db"):
+        print("\n[सूचना] Vector database नहीं मिला। Document Ingestion प्रारंभ हो रहा है...")
+        try:
+            from ingest_docs import ingest_data
+            ingest_data()
+        except Exception as err:
+            print(f"[त्रुटि] Document Ingestion विफल हुआ: {err}")
     
     print("\nपद्धति चुनें (Choose Input Mode):")
     print("1. टाइप करें (Type question)")
@@ -34,7 +53,6 @@ def start_system():
             
             print("\nसोच रहा हूँ... (Thinking...)")
             
-            # Added error handling to prevent crashes during testing
             try:
                 answer = ask_gramin_nyaya(user_text)
                 
@@ -49,7 +67,6 @@ def start_system():
                 print("कृपया दोबारा प्रयास करें। (Please try again.)")
                 
         except KeyboardInterrupt:
-            # Handles Ctrl+C gracefully without throwing a massive traceback
             print("\n\nप्रणाली को जबरन बंद किया गया। (System forcibly closed.) अलविदा!")
             sys.exit(0)
 
